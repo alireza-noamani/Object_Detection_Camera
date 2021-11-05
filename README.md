@@ -68,7 +68,7 @@ Keep in mind that you should refer to this analysis to create the different spit
 
 Now you have become one with the data! Congratulations! How will you use this knowledge to create the different splits: training, validation and testing. There are no single answer to this question but you will need to justify your choice in your submission. You will need to implement the `split_data` function in the `create_splits.py` file. Once you have implemented this function, run it using:
 ```
-python create_splits.py --data_dir /home/workspace/data/
+python create_splits.py --data_dir ./data/preprocessed_data/
 ```
 
 NOTE: Keep in mind that your storage is limited. The files should be <ins>moved</ins> and not copied. 
@@ -80,21 +80,48 @@ Now you are ready for training. As we explain during the course, the Tf Object D
 First, let's download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) and move it to `training/pretrained-models/`. 
 
 Now we need to edit the config files to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following:
+
+``` pretrained model 1: SSD Resnet 50 640x640 model ```
 ```
-python edit_config.py --train_dir /home/workspace/data/train/ --eval_dir /home/workspace/data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+python edit_config.py --train_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/train/ --eval_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
 ```
+
+``` pretrained model 2: SSD Resnet 101 640x640 model ```
+```
+python edit_config.py --train_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/train/ --eval_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet101_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+```
+
 A new config file has been created, `pipeline_new.config`.
 
 ### Training
 
 You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: 
 * a training process:
+``` reference: SSD Resnet 50 640x640 model ```
 ```
-python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config
+nohup python experiments/model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config > training_log.log &
 ```
 * an evaluation process:
 ```
-python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config --checkpoint_dir=training/reference/
+nohup python experiments/model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config --checkpoint_dir=training/reference/  > eval_log.log &
+```
+
+``` modified model 1: SSD Resnet 50 640x640 model with additional augmentations, Adam optimizer, and exponential decay learining rate scheduler ```
+```
+nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_1/ --pipeline_config_path=training/modified_model_1/pipeline_new.config > training_log.log &
+```
+* an evaluation process:
+```
+nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_1/ --pipeline_config_path=training/modified_model_1/pipeline_new.config --checkpoint_dir=training/modified_model_1/ > eval_log.log &
+```
+
+``` modified model 2: SSD Resnet 101 640x640 model with additional augmentations, Adam optimizer, and exponential decay learining rate scheduler ```
+```
+nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_2/ --pipeline_config_path=training/modified_model_2/pipeline_new.config > training_log.log &
+```
+* an evaluation process:
+```
+nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_2/ --pipeline_config_path=training/modified_model_2/pipeline_new.config --checkpoint_dir=training/modified_model_2/ > eval_log.log &
 ```
 
 NOTE: both processes will display some Tensorflow warnings.
