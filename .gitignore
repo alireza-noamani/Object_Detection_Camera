@@ -1,2 +1,17 @@
 data/
+
 training/pretrained-models/
+training/reference/ckpt*
+training/reference/train
+training/reference/eval
+training/reference/checkpoint
+
+training/modified_model_1/ckpt*
+training/modified_model_1/train
+training/modified_model_1/eval
+training/modified_model_1/checkpoint
+
+*.log
+
+__pycache__/
+.ipynb_checkpoints/
