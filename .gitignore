@@ -10,6 +10,22 @@ training/modified_model_1/ckpt*
 training/modified_model_1/train
 training/modified_model_1/eval
 training/modified_model_1/checkpoint
+training/modified_model_1/my_checkpoint
+training/modified_model_1/exported_model
+
+training/modified_model_2/ckpt*
+training/modified_model_2/train
+training/modified_model_2/eval
+training/modified_model_2/checkpoint
+training/modified_model_2/my_checkpoint
+training/modified_model_2/exported_model
+
+training/modified_model_3/ckpt*
+training/modified_model_3/train
+training/modified_model_3/eval
+training/modified_model_3/checkpoint
+training/modified_model_3/my_checkpoint
+training/modified_model_3/exported_model
 
 *.log
 

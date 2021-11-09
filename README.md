@@ -81,14 +81,19 @@ First, let's download the [pretrained model](http://download.tensorflow.org/mode
 
 Now we need to edit the config files to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following:
 
-``` pretrained model 1: SSD Resnet 50 640x640 model ```
+``` pretrained model 1: SSD Resnet 50 v1 fpn 640x640 model ```
 ```
 python edit_config.py --train_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/train/ --eval_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
 ```
 
-``` pretrained model 2: SSD Resnet 101 640x640 model ```
+``` pretrained model 2: SSD Resnet 101 v1 fpn 640x640 model ```
 ```
 python edit_config.py --train_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/train/ --eval_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet101_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+```
+
+``` pretrained model 3: Faster-RCNN Resnet 50 v1 fpn 640x640 model ```
+```
+python edit_config.py --train_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/train/ --eval_dir /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/faster_rcnn_resnet50_v1_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
 ```
 
 A new config file has been created, `pipeline_new.config`.
@@ -124,9 +129,18 @@ nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_2
 nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_2/ --pipeline_config_path=training/modified_model_2/pipeline_new.config --checkpoint_dir=training/modified_model_2/ > eval_log.log &
 ```
 
+``` modified model 3: Faster-RCNN Resnet 50 640x640 model with additional augmentations, Adam optimizer, and exponential decay learining rate scheduler ```
+```
+nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_3/ --pipeline_config_path=training/modified_model_3/pipeline_new.config > training_log.log &
+```
+* an evaluation process:
+```
+nohup python experiments/model_main_tf2.py --model_dir=training/modified_model_3/ --pipeline_config_path=training/modified_model_3/pipeline_new.config --checkpoint_dir=training/modified_model_3/ > eval_log.log &
+```
+
 NOTE: both processes will display some Tensorflow warnings.
 
-To monitor the training, you can launch a tensorboard instance by running `tensorboard --logdir=training`. You will report your findings in the writeup. 
+To monitor the training, you can launch a tensorboard instance by running `nohup tensorboard --logdir=training > tensorboard_log.log &`. You will report your findings in the writeup. 
 
 ### Improve the performances
 
@@ -141,13 +155,23 @@ Keep in mind that the following are also available:
 #### Export the trained model
 Modify the arguments of the following function to adjust it to your models:
 ```
-python .\exporter_main_v2.py --input_type image_tensor --pipeline_config_path training/experiment0/pipeline.config --trained_checkpoint_dir training/experiment0/ckpt-50 --output_directory training/experiment0/exported_model/
+python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path training/modified_model_3/pipeline_new.config --trained_checkpoint_dir training/modified_model_3/my_checkpoint/ --output_directory training/modified_model_3/exported_model/
 ```
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
+
+``` for a single tfrecord file in test ```
 ```
-python inference_video.py -labelmap_path label_map.pbtxt --model_path training/experiment0/exported_model/saved_model --tf_record_path /home/workspace/data/test/tf.record --config_path training/experiment0/pipeline_new.config --output_path animation.mp4
+python inference_video.py --labelmap_path label_map.pbtxt --model_path training/modified_model_3/exported_model/saved_model --tf_record_path /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/test/segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord --config_path training/modified_model_3/pipeline_new.config --output_path animation.mp4
 ```
+
+``` for all tfrecord files in test ```
+for file in data/preprocessed_data/test/*
+do
+filename="${file##*/}" 
+filename="${filename%%.*}"
+python inference_video.py --labelmap_path label_map.pbtxt --model_path training/modified_model_3/exported_model/saved_model --tf_record_path /app/project/Udacity_Object_Detection_Project/data/preprocessed_data/test/$filename.tfrecord --config_path training/modified_model_3/pipeline_new.config --output_path animation/$filename.mp4
+done
 
 ## Submission Template
 
