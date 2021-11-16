@@ -72,7 +72,7 @@ There were 100 `tfrecord` files. Once the script is done, you can look inside yo
 
 Open the `Exploratory Data Analysis` notebook. Make sure that [Seaborn](https://seaborn.pydata.org/installing.html) and [Pandas](https://pandas.pydata.org/docs/getting_started/install.html) are installed.
 
-**First**, I familiarized myself with the data, its structure and its attributes. I used some of the attiributes such as `take` and `get_single_element` to access an image as a single element in the dataset. This shows that each element in the dataset is in the form of a `ditctionary` with different `keys`. These `keys` for a single element can be obtained via `output_shapes` and `element_spec` can show what kind of information.
+**First**, I familiarized myself with the data, its structure and its attributes. I used some of the attributes such as `take` and `get_single_element` to access an image as a single element in the dataset. This shows that each element in the dataset is in the form of a `ditctionary` with different `keys`. These `keys` for a single element can be obtained via `output_shapes` and `element_spec` can show what kind of information.
 
 **Second**, I implemented a `display_instances` function to display images and annotations using `matplotlib`. In this function, I used the following keys: 
 - `image`: used to access the image as an array
