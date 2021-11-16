@@ -5,6 +5,8 @@ training/reference/ckpt*
 training/reference/train
 training/reference/eval
 training/reference/checkpoint
+training/reference/my_checkpoint
+training/reference/exported_model
 
 training/modified_model_1/ckpt*
 training/modified_model_1/train
