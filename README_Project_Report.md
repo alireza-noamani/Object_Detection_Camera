@@ -274,22 +274,22 @@ Note, I used augmentations as well as Adam optimizer with exponential-decay lear
 
 **Increasing batch size could also lead to better performance; however, due to out-of-memory issue, it was not implemented in the experiments.**
 
-![training loss](Figures/Training/Training_Loss.jpg)
+![training loss](Figures/Training/Training_Loss.JPG)
 
 ### Evaluation Loss
 The similar trend can be found in the evaluation loss values. Comparing the loss values of evaluation and training, we can see that overfitting did not occur and a convergence was achieved as can bee seen from the plateau  
 
-![evaluation loss](Figures/Evaluation/Eval_Loss.jpg)
+![evaluation loss](Figures/Evaluation/Eval_Loss.JPG)
 
 ### Precision and Recall
 It can be observed that adding augmentations and using Adam optimizer with exponental-dacy scheduler in `modified model 1 SSD Resnet 50` led to better precision and recall compared to the `reference model SSD Resnet 50`.
 
 It can be observed that using deeper network in `modified model 2 SSD Resnet 101` compared to `modified model 1 SSD Resnet 50` led to poorer precision and recall. Therefore, `Resnet 50` was chosen for the next round of experiment with Faster-RCNN (`modified model 3 Faster-RCCN Resnet 50`). In addition, `modified model 3 Faster-RCCN Resnet 50` showed better precision and recall compated to other models. 
 
-![precision](Figures/Evaluation/Precision.jpg)
+![precision](Figures/Evaluation/Precision.JPG)
 
 
-![recall](Figures/Evaluation/Recall.jpg)
+![recall](Figures/Evaluation/Recall.JPG)
 
 
 
