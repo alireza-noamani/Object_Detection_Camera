@@ -82,7 +82,7 @@ Open the `Exploratory Data Analysis` notebook. Make sure that [Seaborn](https://
 
 10 random images with the associated bounding boxes were displayed. The methods `take` and `shuffle` on the dataset was used. A sample output of this function can be seen below:
 
-![displayinstance](Figures\EDA\display_instance.png)
+![displayinstance](Figures/EDA/display_instance.png)
 
 **Third**, I implemented function `statistics_of_image` that computes some statistics for a single element in the dataset. Specifically, this function takes an element (image) of the dataset and returns a `Pandas DataFrame` including filename, classes associated with the bounding boxes, the relative area of the bounding boxes w.r.t. the image area, the area of the bounding boxes.
 
@@ -93,20 +93,20 @@ Open the `Exploratory Data Analysis` notebook. Make sure that [Seaborn](https://
 - The classes are not balanced
 - The model could have difficulty identifying `cyclisits` compared to `vehicles` or `pedestrians`
 
-![count](Figures\EDA\count_class.png)
+![count](Figures/EDA/count_class.png)
 
 #### Relative and Absolute Area of the Bounding Boxes:
 The figure below shows the relative and absolute area of the bounding boxes for each class (`vehicle`, `pedestrian`, `cyclist`) in the dataset. The `boxplot` below shows that there are outliers. These outliers represent those objects that were too close to the cameras. For instance, a relative area of 1 for `pedestrian` bounding box shows that the corresponding image contains only one object.
 
-![BB Area](Figures\EDA\BB_area.png)
+![BB Area](Figures/EDA/BB_area.png)
 
 To have a better understanding, the boxplot below shows the relative and absolute areas after removing outliers. This plot shows that bounding boxes oftentimes occupy a small portion of an image for all three classes (`vehicle`, `pedestrian`, `cyclist`)
 
-![BB Area Without Outliers](Figures\EDA\BB_area_without_outliers.png)
+![BB Area Without Outliers](Figures/EDA/BB_area_without_outliers.png)
 
 The `stripplot` below shows that those images with large bounding boxes are very few and most of the dataset contain images that have small bounding boxes for all classes. There are some pedestrains that are too close to the camera occupying a major proportion of the image. In some cases, the relative area for pedestrians is equal to 1.
 
-![BB Area Strip Plot](Figures\EDA\BB_area_stripplot.png)
+![BB Area Strip Plot](Figures/EDA/BB_area_stripplot.png)
 
 #### Distribution of Classes:
 The `barplot` below shows:
@@ -114,7 +114,7 @@ The `barplot` below shows:
 - Images containing all three classes (`vehicle`, `pedestrian`, `cyclist`) are small portion of the dataset.
 - There are very few images containing only `cyclist`, only `pedestrian`, both `cyclist` and `pedestrian`, and both `cyclist` and `vehicle`.
 
-![Class Dist](Figures\EDA\class_dist.png)
+![Class Dist](Figures/EDA/class_dist.png)
 
 #### Number of each class per image (Class Frequency):
 The DataFrame `df_class_freq` shows the number of each class per each image. The `stripplot` shows that:
@@ -122,7 +122,7 @@ The DataFrame `df_class_freq` shows the number of each class per each image. The
 - `pedestrian`: between 0 and ~45 times per image
 - `cyclist`: between  0 and ~5 times per image
 
-![class freq](Figures\EDA\class_freq.png)
+![class freq](Figures/EDA/class_freq.png)
 
 #### Weather, light, traffic conditions in a sample batch:
 Taking samples shows that even in a small batch of data (10 images) I can have different `weather` conditions (e.g., sunny/cloudy), different `light` conditions (e.g., day/night), and different `traffic` conditions (e.g., crowded, non-crowded streets)
@@ -216,12 +216,12 @@ To help you visualize these augmentations, a Jupyter notebook `Explore augmentat
 
 Some examples can be found in this directory: `.Figure/Augmentations/`, Some examples are demonstrated below: 
 
-![aug](Figures\Augmentations\1.png)
-![aug](Figures\Augmentations\2.png)
-![aug](Figures\Augmentations\11.png)
-![aug](Figures\Augmentations\12.png)
-![aug](Figures\Augmentations\13.png)
-![aug](Figures\Augmentations\14.png)
+![aug](Figures/Augmentations/1.png)
+![aug](Figures/Augmentations/2.png)
+![aug](Figures/Augmentations/11.png)
+![aug](Figures/Augmentations/12.png)
+![aug](Figures/Augmentations/13.png)
+![aug](Figures/Augmentations/14.png)
 
 
 **Optimizer:** I also experimented with the optimizer, learning rate, and scheduler. I used `Adam_optimizer` with `exponential_decay_learning_rate` and set the  following parameters:
